@@ -27,6 +27,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark Parrent View
+- (IBAction)btnMenuTouchUpInside:(id)sender{
+    [self showParentView];
+}
+- (void)showParentView{
+    self.viewParent.transform =CGAffineTransformMakeScale(.5, .5);
+    
+    self.viewParent.hidden = NO;
+    self.viewParent.alpha = 0.0f;
+    self.viewParent.backgroundColor = [UIColor whiteColor];
+    self.viewParent.transform = CGAffineTransformMakeScale(0.1,0.1);
+    [UIView beginAnimations:@"fadeInNewView" context:NULL];
+    [UIView setAnimationDuration:1.0];
+    self.viewParent.transform = CGAffineTransformMakeScale(1,1);
+    self.viewParent.alpha = 1.0f;
+    [UIView commitAnimations];
+}
+
+
+
 #pragma mark Add button
 - (void)addMenuButton{
     [self.btnMenu setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
@@ -48,5 +68,4 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
-
 @end

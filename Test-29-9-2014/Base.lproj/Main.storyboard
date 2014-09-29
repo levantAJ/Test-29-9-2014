@@ -25,22 +25,38 @@
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="160" y="349" width="80" height="30"/>
                                 </variation>
+                                <connections>
+                                    <action selector="btnMenuTouchUpInside:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="FRe-Ie-kG6"/>
+                                </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ati-5L-KhQ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="iFq-6i-bSb"/>
+                                <exclude reference="Ati-5L-KhQ"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="iFq-6i-bSb"/>
+                                <include reference="Ati-5L-KhQ"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="btnMenu" destination="iFq-6i-bSb" id="kHe-Xp-x5x"/>
+                        <outlet property="viewParent" destination="Ati-5L-KhQ" id="dD3-lh-IIX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
