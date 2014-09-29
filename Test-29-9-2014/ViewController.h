@@ -10,7 +10,8 @@
 
 @interface ViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIButton *btnMenu;
-@property (weak, nonatomic) IBOutlet UIView *viewParent;
+@property (weak, nonatomic) IBOutlet UIImageView *viewParent;
+
 - (IBAction)btnMenuTouchUpInside:(id)sender;
 
 @end
