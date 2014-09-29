@@ -18,7 +18,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    [self configureBackground];
+    [self addBackground];
+    [self addMenuButton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,8 +27,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark Add button
+- (void)addMenuButton{
+    [self.btnMenu setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    self.btnMenu.backgroundColor = [UIColor blackColor];
+}
+
 #pragma mark Add background
-- (void)configureBackground{
+- (void)addBackground{
     UIImageView *backGround = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     backGround.image = [UIImage imageNamed:@"splash.png"];
     [self.view addSubview:backGround];
