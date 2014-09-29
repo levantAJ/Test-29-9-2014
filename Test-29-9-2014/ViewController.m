@@ -20,6 +20,8 @@
     
     [self addBackground];
     [self addMenuButton];
+    self.tableData = [[NSArray alloc] initWithObjects:@"Profile", @"Explore", @"Favorites", @"Search", @"Inbox", @"Sessions", @"Mics", nil];
+    [self.tbvOptions setBackgroundColor:[UIColor clearColor]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,9 +33,15 @@
 - (IBAction)btnMenuTouchUpInside:(id)sender{
     [self showParentView];
 }
+
+- (IBAction)btnCloseTouchUpInside:(id)sender {
+    self.viewParent.hidden = YES;
+}
 - (void)showParentView{
 //    [self blurView];
     [self blur];
+    [self.viewParent bringSubviewToFront:self.btnClose];
+    [self.viewParent bringSubviewToFront:self.tbvOptions];
 //    self.viewParent = [self blurView];
     [self.view addSubview:self.viewParent];
     self.viewParent.transform =CGAffineTransformMakeScale(.5, .5);
@@ -47,6 +55,7 @@
     self.viewParent.transform = CGAffineTransformMakeScale(1,1);
     self.viewParent.alpha = 1.0f;
     [UIView commitAnimations];
+    [self.tbvOptions reloadData];
 }
 
 
@@ -71,7 +80,7 @@
     
     CIFilter *gaussianBlurFilter = [CIFilter filterWithName: @"CIGaussianBlur"];
     [gaussianBlurFilter setValue:clampFilter.outputImage forKey: @"inputImage"];
-    [gaussianBlurFilter setValue:[NSNumber numberWithFloat:5.0f] forKey:@"inputRadius"];
+    [gaussianBlurFilter setValue:[NSNumber numberWithFloat:10.0f] forKey:@"inputRadius"];
     
     CIContext *context = [CIContext contextWithOptions:nil];
     CGImageRef cgImg = [context createCGImage:gaussianBlurFilter.outputImage fromRect:[blurImg extent]];
@@ -79,11 +88,54 @@
     
     //Add UIImageView to current view.
     
-//    UIImageView *imgView = [[UIImageView alloc] initWithFrame:currentView.bounds];
-    self.viewParent.image = outputImg;
-//    [currentView addSubview:imgView];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.viewParent.bounds];
+    imgView.image = outputImg;
+    [self.viewParent addSubview:imgView];
 }
 
+#pragma mark Table View
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [self.tableData count];
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *simpleTableIdentifier = @"cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+    }
+
+    if (indexPath.row==0) {
+        UIImageView *image = (UIImageView*)[cell viewWithTag:101];
+        image.backgroundColor = [UIColor greenColor];
+        image = nil;
+    }
+    
+    UILabel *lblTitle = (UILabel*)[cell viewWithTag:102];
+    NSLog(@"%@", [self.tableData objectAtIndex:indexPath.row]);
+    lblTitle.text = [self.tableData objectAtIndex:indexPath.row];
+    
+//    lblTitle = nil;
+//    cell.selectionStyle  = UITableViewCellSelectionStyleNone;
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    cell.backgroundColor = [UIColor clearColor];
+    return cell;
+}
+- (void)tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
+    UITableViewCell *cell = (UITableViewCell*)[self tableView:self.tbvOptions
+                                        cellForRowAtIndexPath:indexPath];
+    UIImageView *image = (UIImageView*)[cell viewWithTag:101];
+    image.backgroundColor = [UIColor greenColor];
+    image = nil;
+}
+- (void)tableView: (UITableView *) tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = (UITableViewCell*)[self tableView:self.tbvOptions
+                                        cellForRowAtIndexPath:indexPath];
+    UIImageView *image = (UIImageView*)[cell viewWithTag:101];
+    image.backgroundColor = [UIColor clearColor];
+    image = nil;
+}
 
 #pragma mark Add button
 - (void)addMenuButton{
